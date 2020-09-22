@@ -17,6 +17,7 @@ const computerLizard = document.getElementById('computerLizard');
 const computerSpock = document.getElementById('computerSpock');
 
 const allGameIcons = document.querySelectorAll('.far');
+const explain = document.getElementById('explain');
 
 const choices = {
     rock: { name: 'Rock', defeats: ['scissors', 'lizard'] },
@@ -48,6 +49,7 @@ function resetAll() {
     playerChoiceEl.textContent = '';
     computerChoiceEl.textContent = '';
     resultsText.textContent = '';
+    explain.textContent = '';
     resetSelected();
 }
 
@@ -93,23 +95,62 @@ function displayComputerChoice() {
             break;
     }
 }
+// Explanation
+function explanation(player, comp) {
+    if ((player === 'rock' && comp == 'lizard') || (player === 'lizard' && comp == 'rock')) {
+        explain.textContent = 'Rock Crushes Lizard';
+    }
+    if ((player === 'rock' && comp == 'scissors') || (player === 'scissors' && comp == 'rock')) {
+        explain.textContent = 'Rock Crushes Scissors';
+    }
+    if ((player === 'paper' && comp == 'rock') || (player === 'rock' && comp == 'paper')) {
+        explain.textContent = 'Paper Covers Rock';
+    }
+    if ((player === 'paper' && comp == 'spock') || (player === 'spock' && comp == 'paper')) {
+        explain.textContent = 'Paper Disproves Spock';
+    }
+    if ((player === 'scissors' && comp == 'paper') || (player === 'paper' && comp == 'scissors')) {
+        explain.textContent = 'Scissors Cuts Paper';
+    }
+    if ((player === 'scissors' && comp == 'lizard') || (player === 'lizard' && comp == 'scissors')) {
+        explain.textContent = 'Scissors decapitates Lizard';
+    }
+    if ((player === 'lizard' && comp == 'paper') || (player === 'paper' && comp == 'lizard')) {
+        explain.textContent = 'Lizard eats Paper';
+    }
+    if ((player === 'lizard' && comp == 'spock') || (player === 'spock' && comp == 'lizard')) {
+        explain.textContent = 'Lizard poisons Spock';
+    }
+    if ((player === 'spock' && comp == 'scissors') || (player === 'scissors' && comp == 'spock')) {
+        explain.textContent = 'Spock smashes Scissors';
+    }
+
+    if ((player === 'spock' && comp == 'rock') || (player === 'rock' && comp == 'spock')) {
+        explain.textContent = 'Spock vaporizes Rock';
+    }
+}
 
 // Check results , increaase scores and result
 function updateScore(playerChoice) {
     if (playerChoice === computerChoice) {
         resultsText.textContent = "It's a Tie.";
+        resultsText.style.color = 'black';
     } else {
         const choice = choices[playerChoice];
         if (choice.defeats.indexOf(computerChoice) > -1) {
             startConfetti();
+            resultsText.style.color = 'green';
             resultsText.textContent = 'You Won!';
             playerScoreNumber++;
             playerScoreEl.textContent = playerScoreNumber;
+            explanation(playerChoice, computerChoice);
         } else {
             stopConfetti();
+            resultsText.style.color = 'red';
             resultsText.textContent = 'You Lost!';
             computerScoreNumber++;
             computerScoreEl.textContent = computerScoreNumber;
+            explanation(playerChoice, computerChoice);
         }
     }
 }
@@ -125,6 +166,7 @@ function checkResult(playerChoice) {
 // Passsing Player Selection Value and styling Icons
 
 function select(playerChoice) {
+    explain.textContent = '';
     checkResult(playerChoice);
     // Add selected styling and update player choice
     switch (playerChoice) {

@@ -80,12 +80,20 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .result-text {
     font-size: 40px;
     margin: unset;
-    margin-top: 20px;
+    margin-top: 5px;
+}
+
+.explain {
+    font-size: 30px;
+    font-style: italic;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.726);
 }
 
 
